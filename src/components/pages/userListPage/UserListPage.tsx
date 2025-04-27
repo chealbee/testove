@@ -1,13 +1,13 @@
 import AddNewUser from "./addNewUser/AddNewUser";
 import UserList from "./userList/UserList";
-import UserListPagination from "./userList/UserListPagination";
+import { Toaster } from "@/components/ui/toaster";
 
 const UserListPage = () => {
   return (
     <>
+      <Toaster />
       <AddNewUser />
       <UserList />
-      <UserListPagination />
     </>
   );
 };
