@@ -10,6 +10,15 @@ const useAddNewUser = () => {
     CreateUserMutation,
     CreateUserMutationVariables
   >(CREATE_USER, {
+    errorPolicy: "all",
+    optimisticResponse: (variables) => ({
+      insert_user_one: {
+        __typename: "user",
+        id: "temp-id-" + Math.random(),
+        ...variables.object,
+      },
+    }),
+
     update(cache, { data }) {
       const newUser = data?.insert_user_one;
 

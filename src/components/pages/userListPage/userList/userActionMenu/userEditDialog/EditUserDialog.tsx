@@ -1,20 +1,28 @@
-import CustomDialog from "@/components/customComponents/dialogs/CustomDialog";
+import CustomDialog from "@/components/reuseComponents/dialogs/CustomDialog";
 import { Button } from "@chakra-ui/react";
-import { createSuccessToaster, ifErrToaster } from "@/utils/tosts";
+import { createSuccessToaster, ifErrToaster } from "@/utils/toasts";
 import useUpdateUser from "@/graphql/hooks/useUpdateUser";
 import { useEffect } from "react";
-import ControledFormFildsList from "@/components/customComponents/forms/ControledFormFildsList";
-import useFormFields from "../../../../../../hooks/form/useUserFormFilds";
-import { AddNewUserDialogProps, UserEditFormFildsData } from "./intefaces";
+import ControledFormFildsList from "@/components/reuseComponents/forms/ControledFormFildsList";
+import useFormFields from "../../../../../../hooks/form/useFormFields";
+import { USER_DATA, USER_FULL_DATA } from "@/types/user";
 
-const EditUserDialog = ({ open, user, setOpen }: AddNewUserDialogProps) => {
+const EditUserDialog = ({
+  open,
+  user,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  user: USER_FULL_DATA;
+}) => {
   const { updateUser, loading, error } = useUpdateUser();
 
   useEffect(() => {
     if (error) ifErrToaster(error.message);
   }, [error]);
 
-  const submitEditUser = async (data: UserEditFormFildsData) => {
+  const submitEditUser = async (data: USER_DATA) => {
     const isChanged =
       data.address !== user.address ||
       data.email !== user.email ||
@@ -44,7 +52,7 @@ const EditUserDialog = ({ open, user, setOpen }: AddNewUserDialogProps) => {
   };
 
   const { errors, register, reset, submitHandler, trigger } =
-    useFormFields<UserEditFormFildsData>({
+    useFormFields<USER_DATA>({
       defaultValues: {
         first_name: user.first_name || "",
         last_name: user.last_name || "",
@@ -84,7 +92,7 @@ const EditUserDialog = ({ open, user, setOpen }: AddNewUserDialogProps) => {
         </Button>
       }
     >
-      <ControledFormFildsList<UserEditFormFildsData>
+      <ControledFormFildsList<USER_DATA>
         register={register}
         loading={loading}
         fields={[
@@ -92,28 +100,52 @@ const EditUserDialog = ({ open, user, setOpen }: AddNewUserDialogProps) => {
             label: "Ім'я",
             placeholder: "Введіть ім'я",
             registerName: "first_name",
-            registerValidationConf: { required: "Обов'язкове поле" },
+            registerValidationConf: {
+              required: "Обов'язкове поле",
+              minLength: {
+                value: 3,
+                message: "Мінімальна довжина імені 3 символи",
+              },
+            },
             error: errors.first_name?.message,
           },
           {
             label: "Фамілія",
             placeholder: "Введіть фамілію",
             registerName: "last_name",
-            registerValidationConf: { required: "Обов'язкове поле" },
+            registerValidationConf: {
+              required: "Обов'язкове поле",
+              minLength: {
+                value: 3,
+                message: "Мінімальна довжина фамілії 3 символи",
+              },
+            },
             error: errors.last_name?.message,
           },
           {
             label: "Email",
             placeholder: "Введіть Email",
             registerName: "email",
-            registerValidationConf: { required: "Обов'язкове поле" },
+            registerValidationConf: {
+              required: "Обов'язкове поле",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Невірний формат email",
+              },
+            },
             error: errors.email?.message,
           },
           {
             label: "Адрес",
             placeholder: "Введіть адрес",
             registerName: "address",
-            registerValidationConf: { required: "Обов'язкове поле" },
+            registerValidationConf: {
+              required: "Обов'язкове поле",
+              minLength: {
+                value: 5,
+                message: "Мінімальна довжина адреси 5 символів",
+              },
+            },
             error: errors.address?.message,
           },
         ]}

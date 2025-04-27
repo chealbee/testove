@@ -10,6 +10,13 @@ const useDeleteUser = () => {
     Delete_User_By_PkMutation,
     Delete_User_By_PkMutationVariables
   >(DELETE_USER, {
+    errorPolicy: "all",
+    optimisticResponse: (variables) => ({
+      delete_user_by_pk: {
+        __typename: "user",
+        id: variables.deleteUserByPkId,
+      },
+    }),
     update(cache, { data }) {
       const deletedUser = data?.delete_user_by_pk;
 

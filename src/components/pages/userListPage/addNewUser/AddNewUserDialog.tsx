@@ -1,17 +1,11 @@
-import CustomDialog from "@/components/customComponents/dialogs/CustomDialog";
+import CustomDialog from "@/components/reuseComponents/dialogs/CustomDialog";
 import { ReactNode, useEffect, useState } from "react";
 import useAddNewUser from "@/graphql/hooks/useAddNewUser";
-import { createSuccessToaster, ifErrToaster } from "@/utils/tosts";
+import { createSuccessToaster, ifErrToaster } from "@/utils/toasts";
 import { Button } from "@chakra-ui/react";
-import ControledFormFildsList from "@/components/customComponents/forms/ControledFormFildsList";
-import useFormFields from "../../../../hooks/form/useUserFormFilds";
-
-interface EditUserFormData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  address: string;
-}
+import ControledFormFildsList from "@/components/reuseComponents/forms/ControledFormFildsList";
+import useFormFields from "../../../../hooks/form/useFormFields";
+import { USER_DATA } from "@/types/user";
 
 const AddNewUserDialog = ({ children }: { children: ReactNode }) => {
   const { createUser, error, loading } = useAddNewUser();
@@ -24,7 +18,7 @@ const AddNewUserDialog = ({ children }: { children: ReactNode }) => {
     if (error) ifErrToaster(error.message);
   }, [error]);
 
-  const submitEditUser = async (data: EditUserFormData) => {
+  const submitEditUser = async (data: USER_DATA) => {
     try {
       await createUser({
         variables: {
@@ -46,7 +40,7 @@ const AddNewUserDialog = ({ children }: { children: ReactNode }) => {
   };
 
   const { errors, isValid, register, reset, submitHandler, trigger } =
-    useFormFields<EditUserFormData>({
+    useFormFields<USER_DATA>({
       onSubmitFunc: submitEditUser,
     });
 
@@ -81,7 +75,7 @@ const AddNewUserDialog = ({ children }: { children: ReactNode }) => {
         open={isEditDialogOpen}
         confirmButton={renderConfirmButton}
       >
-        <ControledFormFildsList<EditUserFormData>
+        <ControledFormFildsList<USER_DATA>
           register={register}
           loading={loading}
           fields={[

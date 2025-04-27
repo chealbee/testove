@@ -1,7 +1,7 @@
 import { Spinner, Table } from "@chakra-ui/react";
 
 import UserActionMenu from "./userActionMenu/UserActionMenu";
-import { ifErrToaster } from "@/utils/tosts";
+import { ifErrToaster } from "@/utils/toasts";
 import useGetUsers from "@/graphql/hooks/useGetUsers";
 
 const UserList = () => {

@@ -11,6 +11,14 @@ const useUpdateUser = () => {
     Update_User_By_PkMutation,
     Update_User_By_PkMutationVariables
   >(UPDATE_USER, {
+    errorPolicy: "all",
+    optimisticResponse: (variables) => ({
+      update_user_by_pk: {
+        __typename: "user",
+        id: variables.pkColumns.id,
+        ...variables.set,
+      },
+    }),
     update(cache, { data }) {
       const updatedUser = data?.update_user_by_pk;
 

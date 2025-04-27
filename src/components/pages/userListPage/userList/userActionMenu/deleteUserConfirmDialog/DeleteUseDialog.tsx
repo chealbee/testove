@@ -1,6 +1,6 @@
-import CustomDialog from "@/components/customComponents/dialogs/CustomDialog";
+import CustomDialog from "@/components/reuseComponents/dialogs/CustomDialog";
 import { Button } from "@chakra-ui/react";
-import { createSuccessToaster, ifErrToaster } from "@/utils/tosts";
+import { createSuccessToaster, ifErrToaster } from "@/utils/toasts";
 import { useEffect } from "react";
 import useDeleteUser from "@/graphql/hooks/useDeleteUser";
 
@@ -26,6 +26,7 @@ const DeleteUseDialog = ({ id, open, setOpen }: DeleteUseDialogProps) => {
       console.error("Помилка при видаленні юзера:", err);
     }
   };
+
   const renderConfirmButton = (
     <Button
       disabled={loading}

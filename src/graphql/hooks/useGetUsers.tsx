@@ -12,6 +12,7 @@ const useGetUsers = () => {
     GetAllUsersQueryVariables
   >(GET_USERS, {
     variables: { limit: 100, orderBy: { created_at: Order_By.Desc } },
+    fetchPolicy: "cache-and-network",
   });
 
   return { data, loading, error };
