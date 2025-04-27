@@ -49,7 +49,6 @@ const DeleteUseDialog = ({ id, open, setOpen }: DeleteUseDialogProps) => {
       {error
         ? "Помилка при видаленні юзера: " + error?.message
         : `Ви точно хочете видалити користувача з id: ${id} ?`}
-      `
     </CustomDialog>
   );
 };
