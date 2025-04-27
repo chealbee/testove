@@ -1,0 +1,12 @@
+schema: https://europe-west1-lasertag-test.cloudfunctions.net/graphql/PEXwvC
+documents: ./src/graphql/**/*.ts
+generates:
+  src/graphql/types/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withComponent: false
+      withHOC: false
