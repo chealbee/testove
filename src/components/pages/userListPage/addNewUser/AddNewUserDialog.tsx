@@ -83,28 +83,52 @@ const AddNewUserDialog = ({ children }: { children: ReactNode }) => {
               label: "Ім'я",
               placeholder: "Введіть ім'я",
               registerName: "first_name",
-              registerValidationConf: { required: "Обов'язкове поле" },
+              registerValidationConf: {
+                required: "Обов'язкове поле",
+                minLength: {
+                  value: 3,
+                  message: "Мінімальна довжина імені 3 символи",
+                },
+              },
               error: errors.first_name?.message,
             },
             {
               label: "Фамілія",
               placeholder: "Введіть фамілію",
               registerName: "last_name",
-              registerValidationConf: { required: "Обов'язкове поле" },
+              registerValidationConf: {
+                required: "Обов'язкове поле",
+                minLength: {
+                  value: 3,
+                  message: "Мінімальна довжина фамілії 3 символи",
+                },
+              },
               error: errors.last_name?.message,
             },
             {
               label: "Email",
               placeholder: "Введіть Email",
               registerName: "email",
-              registerValidationConf: { required: "Обов'язкове поле" },
+              registerValidationConf: {
+                required: "Обов'язкове поле",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Невірний формат email",
+                },
+              },
               error: errors.email?.message,
             },
             {
               label: "Адрес",
               placeholder: "Введіть адрес",
               registerName: "address",
-              registerValidationConf: { required: "Обов'язкове поле" },
+              registerValidationConf: {
+                required: "Обов'язкове поле",
+                minLength: {
+                  value: 5,
+                  message: "Мінімальна довжина адреси 5 символів",
+                },
+              },
               error: errors.address?.message,
             },
           ]}
